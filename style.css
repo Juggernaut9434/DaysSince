@@ -5,4 +5,17 @@ html, body {
   canvas {
     display: block;
   }
-  
+
+td, th {
+  background-color: #cccccc;
+  padding: 4px;
+}
+#items_table {
+  border: 1px dotted blue;
+}
+#items_table h2 {
+  margin-top: 0px;
+}
+label {
+  vertical-align: top;
+}
