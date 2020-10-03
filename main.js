@@ -15,18 +15,10 @@
  * HTML Handling
  ******************/
 
-// wrapper function for html parsed resetRow(keyVal)
-function getResetBtn(key) {
-  console.log(key);
-  return '<td><input type="button" onclick="resetRow('+key+')"></td>';
+// wrapper function for html parsed resetRow()
+function getResetBtn() {
+  return '<td><input type="button" onclick="resetRow(this)" value="Reset"></td>';
 }
-
-function resetRow(keyVal) {
-  console.log(keyVal);
-  localStorage.setItem(key, new Date());  // 10-20-2019
-  doShowAll();
-}
-
 
 // wrapper function for html parsed daysDiff(Date)
 function daysSince(key) {
@@ -39,6 +31,16 @@ function daysSince(key) {
   return "<td>" + diffDate(date) +  "</td>";
 }
 
+function resetRow(element) {
+  //          input   > td        > tr       > tbody    > table
+  let table = element.parentNode.parentNode.parentNode.parentNode
+  // using x.rowIndex, to get current row then
+  let keyVal = table.rows[1].cells[0].innerHTML;
+  localStorage.setItem(keyVal, new Date());  // 10-20-2019
+  doShowAll();
+}
+
+
 /**
  * Gets the days since older date from newer date.
  * @param {Date} date1: older date, string to be parsed, 2020-10-01
@@ -50,19 +52,23 @@ function diffDate(date) {
 
 /**
  * Creates a table from the local Storage pairs
+ * if local storage is empty then display empty
+ * Display reset button that resets the date to present
  */
 function doShowAll() {
+    // table header
+  let tHead = "<tr><th>Name</th><th>Days Since</th><th></th></tr>\n"
   let key = "";
-  // table header
-  let pairs = "<tr><th>Name</th><th>Days Since</th></tr>\n";
+  let pairs = tHead;
   // for every row in local Storage, add html row to pairs in html
   for (let i=0;i<=localStorage.length-1;i++) {
     key = localStorage.key(i);
     // add a row: key, value, reset btn
-    pairs += "<tr><td>"+key+"</td>\n"+daysSince(key)+ getResetBtn(key)+'</tr>\n';
+    pairs += "<tr><td>"+key+"</td>\n"+daysSince(key)+ getResetBtn()+'</tr>\n';
   }
-  if (pairs == "<tr><th>Name</th><th>Days Since</th></tr>\n") {
-    pairs += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td>"+getResetBtn(key)+"</tr>\n";
+  // if table is empty, display empty
+  if (pairs == tHead) {
+    pairs += "<tr><td><i>empty</i></td>\n<td><i>empty</i></td>"+getResetBtn()+"</tr>\n";
     console.log("empty table printed");
   }
   document.getElementById('pairs').innerHTML = pairs;

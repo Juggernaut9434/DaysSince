@@ -8,12 +8,13 @@
 
   </head>
   <body onload="doShowAll()">
-   
-    <form id="formElement">
-      <input type="text" name="name" placeholder="Name of Item">
-      <input type="text" name="date" placeholder="MM-DD-YYYY">
-      <input type="submit" onclick="setLineItem()">
-    </form>
+   <div id="formFormat">
+      <form id="formElement">
+        <input type="text" name="name" placeholder="Name of Item">
+        <input type="text" name="date" placeholder="MM-DD-YYYY">
+        <input type="submit" onclick="setLineItem()">
+      </form>
+    </div>
     <div id="items_table">
       <h2>Items</h2>
       <table id="pairs">
