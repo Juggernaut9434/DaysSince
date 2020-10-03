@@ -17,7 +17,8 @@
 
 // wrapper function for html parsed resetRow()
 function getResetBtn() {
-  return '<td><input type="button" onclick="resetRow(this)" value="Reset"></td>';
+  return '<td><input type="button" onclick="resetRow(this)" value="Reset">\
+          <input type="button" onclick="removeFromTable(this)" value="Remove"</td>';
 }
 
 // wrapper function for html parsed daysDiff(Date)
@@ -37,7 +38,15 @@ function resetRow(element) {
   // using x.rowIndex, to get current row then
   let keyVal = table.rows[1].cells[0].innerHTML;
   localStorage.setItem(keyVal, new Date());  // 10-20-2019
-  doShowAll();
+  doShowAll(); // update table
+}
+
+function removeFromTable(element) {
+  //          input   > td        > tr       > tbody    > table
+  let table = element.parentNode.parentNode.parentNode.parentNode
+  let keyVal = table.rows[1].cells[0].innerHTML;
+  localStorage.removeItem(keyVal);
+  doShowAll(); // update table
 }
 
 
@@ -81,7 +90,6 @@ function doShowAll() {
  **************************************************************/
 
 function setLineItem() {
-  var errormsg = "Date Inputed to Form was not correct \n MM/DD/YYYY or MM-DD-YYYY or YYYY-MM-DD";
   let pname = document.forms.formElement.name.value;
   let pdate = document.forms.formElement.date.value;
   console.log(pdate);
