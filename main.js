@@ -114,6 +114,9 @@ function removeLineItem() {
 }
 
 function clearStorage() {
+  // ask to confirm to clear the table. returns boolean
+  if (!confirm('Are you sure you want to clear this table?'))
+    return;
   for(let i=0;i<localStorage.length;i++) {
     localStorage.removeItem(localStorage.key(i));
   }
